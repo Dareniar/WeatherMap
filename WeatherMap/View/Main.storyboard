@@ -345,9 +345,30 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="le8-MG-gD0">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eXe-1j-8Fe">
                                 <rect key="frame" x="0.0" y="76" width="414" height="660"/>
-                            </mapView>
+                                <subviews>
+                                    <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="le8-MG-gD0">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="660"/>
+                                    </mapView>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Geoposition" translatesAutoresizingMaskIntoConstraints="NO" id="Qzi-H4-n1z">
+                                        <rect key="frame" x="184.66666666666666" y="247.66666666666669" width="45" height="75"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="75" id="Jrb-i0-E1S"/>
+                                            <constraint firstAttribute="width" constant="45" id="c8p-d6-EVt"/>
+                                        </constraints>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" red="0.098039215690000001" green="0.1137254902" blue="0.12549019610000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstItem="le8-MG-gD0" firstAttribute="height" secondItem="eXe-1j-8Fe" secondAttribute="height" id="3lk-hj-OVb"/>
+                                    <constraint firstItem="le8-MG-gD0" firstAttribute="centerY" secondItem="eXe-1j-8Fe" secondAttribute="centerY" id="Crv-cC-PpC"/>
+                                    <constraint firstItem="Qzi-H4-n1z" firstAttribute="centerY" secondItem="eXe-1j-8Fe" secondAttribute="centerY" constant="-45" id="SKf-kS-Fyb"/>
+                                    <constraint firstAttribute="width" secondItem="le8-MG-gD0" secondAttribute="width" id="mD8-Lx-Qrh"/>
+                                    <constraint firstItem="le8-MG-gD0" firstAttribute="centerX" secondItem="eXe-1j-8Fe" secondAttribute="centerX" id="qvA-BH-t0O"/>
+                                    <constraint firstItem="Qzi-H4-n1z" firstAttribute="centerX" secondItem="eXe-1j-8Fe" secondAttribute="centerX" id="yeu-1g-fiG"/>
+                                </constraints>
+                            </view>
                             <searchBar contentMode="redraw" searchBarStyle="minimal" translatesAutoresizingMaskIntoConstraints="NO" id="GCf-s3-feU">
                                 <rect key="frame" x="0.0" y="20" width="414" height="56"/>
                                 <color key="backgroundColor" red="0.098039215690000001" green="0.1137254902" blue="0.12549019610000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -355,7 +376,7 @@
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="faC-LE-3dk">
-                                <rect key="frame" x="218" y="96" width="176" height="35"/>
+                                <rect key="frame" x="20" y="681" width="176" height="35"/>
                                 <color key="backgroundColor" red="0.098039215690000001" green="0.1137254902" blue="0.12549019610000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="19"/>
                                 <state key="normal" title="  Weather Forecast  ">
@@ -367,26 +388,47 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <segue destination="jJQ-JH-b3a" kind="show" id="j1b-bC-Mi0"/>
+                                    <action selector="forecastButtonTapped:" destination="Z1D-6U-PNb" eventType="touchUpInside" id="BtZ-V9-Tyf"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k2p-C0-NcQ">
+                                <rect key="frame" x="267" y="681" width="127" height="35"/>
+                                <color key="backgroundColor" red="0.098039215690000001" green="0.1137254902" blue="0.12549019610000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="19"/>
+                                <state key="normal" title="  My Location  ">
+                                    <color key="titleColor" red="0.96078431369999995" green="0.50980392159999999" blue="0.13725490200000001" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="7"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="locationButtonTapped:" destination="Z1D-6U-PNb" eventType="touchUpInside" id="Xch-97-mC2"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="0.098039215690000001" green="0.1137254902" blue="0.12549019610000001" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="le8-MG-gD0" firstAttribute="top" secondItem="GCf-s3-feU" secondAttribute="bottom" id="4z4-Rf-DI1"/>
-                            <constraint firstItem="le8-MG-gD0" firstAttribute="bottom" secondItem="EJY-1Q-cnC" secondAttribute="bottom" id="Acc-yC-Nao"/>
+                            <constraint firstItem="EJY-1Q-cnC" firstAttribute="trailing" secondItem="k2p-C0-NcQ" secondAttribute="trailing" constant="20" id="0zA-Sh-Sif"/>
+                            <constraint firstItem="EJY-1Q-cnC" firstAttribute="bottom" secondItem="faC-LE-3dk" secondAttribute="bottom" constant="20" id="7Ni-kz-AJH"/>
+                            <constraint firstItem="EJY-1Q-cnC" firstAttribute="bottom" secondItem="k2p-C0-NcQ" secondAttribute="bottom" constant="20" id="9fZ-BW-6va"/>
                             <constraint firstItem="GCf-s3-feU" firstAttribute="top" secondItem="EJY-1Q-cnC" secondAttribute="top" id="CO5-Bc-VKX"/>
-                            <constraint firstItem="EJY-1Q-cnC" firstAttribute="trailing" secondItem="faC-LE-3dk" secondAttribute="trailing" constant="20" id="bjV-qW-COg"/>
+                            <constraint firstItem="eXe-1j-8Fe" firstAttribute="top" secondItem="GCf-s3-feU" secondAttribute="bottom" id="DVe-mG-1QK"/>
                             <constraint firstItem="GCf-s3-feU" firstAttribute="leading" secondItem="EJY-1Q-cnC" secondAttribute="leading" id="dBj-Is-rZf"/>
                             <constraint firstItem="GCf-s3-feU" firstAttribute="trailing" secondItem="EJY-1Q-cnC" secondAttribute="trailing" id="gIR-hE-TVp"/>
-                            <constraint firstItem="faC-LE-3dk" firstAttribute="top" secondItem="GCf-s3-feU" secondAttribute="bottom" constant="20" id="m7D-gS-ojM"/>
-                            <constraint firstItem="le8-MG-gD0" firstAttribute="trailing" secondItem="EJY-1Q-cnC" secondAttribute="trailing" id="pdd-xO-aqq"/>
-                            <constraint firstItem="le8-MG-gD0" firstAttribute="leading" secondItem="EJY-1Q-cnC" secondAttribute="leading" id="xys-KB-BBd"/>
+                            <constraint firstItem="EJY-1Q-cnC" firstAttribute="trailing" secondItem="eXe-1j-8Fe" secondAttribute="trailing" id="jJN-wA-zeN"/>
+                            <constraint firstItem="faC-LE-3dk" firstAttribute="leading" secondItem="EJY-1Q-cnC" secondAttribute="leading" constant="20" id="nou-4e-QRx"/>
+                            <constraint firstAttribute="bottom" secondItem="eXe-1j-8Fe" secondAttribute="bottom" id="osB-Zv-wSa"/>
+                            <constraint firstItem="eXe-1j-8Fe" firstAttribute="leading" secondItem="EJY-1Q-cnC" secondAttribute="leading" id="vGd-7p-BlI"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="EJY-1Q-cnC"/>
                     </view>
                     <connections>
+                        <outlet property="mapView" destination="le8-MG-gD0" id="eDN-fE-cPf"/>
                         <outlet property="searchDisplayController" destination="CCp-zR-xdm" id="iDx-hM-RcU"/>
+                        <segue destination="jJQ-JH-b3a" kind="show" identifier="forecast" id="cXP-4h-MI2"/>
+                        <segue destination="jJQ-JH-b3a" kind="show" identifier="search" id="ju6-Om-YNZ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fY4-6X-5y4" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -406,8 +448,12 @@
         <image name="Back" width="10" height="18"/>
         <image name="Cloud" width="269" height="200"/>
         <image name="Drop" width="24" height="34"/>
+        <image name="Geoposition" width="432" height="689.80645751953125"/>
         <image name="Umbrella" width="32" height="36"/>
         <image name="Wind" width="38" height="35"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="ju6-Om-YNZ"/>
+    </inferredMetricsTieBreakers>
     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
 </document>

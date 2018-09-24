@@ -44,7 +44,6 @@ class WeatherViewController: UIViewController {
     
 
     @IBAction func backButtonTapped(_ sender: Any) {
-        print("Hir")
         dismiss(animated: true, completion: nil)
     }
 
