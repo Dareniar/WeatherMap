@@ -10,6 +10,7 @@ import UIKit
 import MapKit
 import CoreLocation
 import SwiftyJSON
+import JGProgressHUD
 
 protocol HandleMapSearch {
     func recenterMapView(placemark:MKPlacemark)
@@ -60,6 +61,12 @@ class MapViewController: UIViewController {
         
         let destinationVC = segue.destination as! WeatherViewController
         
+        let hud = JGProgressHUD(style: .light)
+        hud.contentInsets = UIEdgeInsets(top: 60, left: 60, bottom: 60, right: 60)
+        hud.textLabel.text = "Loading"
+        hud.show(in: destinationVC.view)
+        
+        
         if segue.identifier == "forecast" {
             
             Helper.fetchWeatherData(latitude: latitude!, longitude: longitude!) {
@@ -67,6 +74,8 @@ class MapViewController: UIViewController {
                 Helper.update(destination: destinationVC, with: Helper.weatherJSON!)
                 
                 destinationVC.navigationItem.title = "Lat: ~\(Int(self.latitude!)), Lon: ~\(Int(self.longitude!))"
+                
+                hud.dismiss(animated: true)
             }
         }
     }
