@@ -9,6 +9,7 @@
 import UIKit
 import MapKit
 import CoreLocation
+import SwiftyJSON
 
 class MapViewController: UIViewController {
     
@@ -36,11 +37,12 @@ class MapViewController: UIViewController {
         
         if segue.identifier == "forecast" {
             
-//
-//            destinationVC.longitude = longitude
-//            destinationVC.latitude = latitude
-            destinationVC.navigationItem.title = "Latitude: ~\(latitude!.rounded()), Longitude: ~\(longitude!.rounded())"
-            
+            Helper.fetchWeatherData(latitude: latitude!, longitude: longitude!) {
+                
+                Helper.update(destination: destinationVC, with: Helper.weatherJSON!)
+                
+                destinationVC.navBarTitle.title = "Lat: ~\(self.latitude!.rounded()), Lon: ~\(self.longitude!.rounded())"
+            }
         }
     }
 }
@@ -66,12 +68,4 @@ extension MapViewController: CLLocationManagerDelegate {
         }
     }
 }
-
-//extension MapViewController: MKMapViewDelegate {
-//
-//    func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
-//        //centerAnnotation.coordinate = mapView.centerCoordinate
-//    }
-//
-//}
 
