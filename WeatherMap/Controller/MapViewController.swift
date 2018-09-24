@@ -43,6 +43,7 @@ class MapViewController: UIViewController {
         searchBar.sizeToFit()
         searchBar.placeholder = "Search for places"
         searchBar.searchBarStyle = .minimal
+        searchBar.keyboardAppearance = .dark
         navigationItem.titleView = resultSearchController?.searchBar
         let textFieldInsideSearchBar = searchBar.value(forKey: "searchField") as? UITextField
         textFieldInsideSearchBar?.textColor = UIColor.orange
