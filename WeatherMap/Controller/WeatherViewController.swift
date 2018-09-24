@@ -36,7 +36,6 @@ class WeatherViewController: UIViewController {
     @IBOutlet weak var temperatureLabel5: UILabel!
     @IBOutlet weak var dayLabel5: UILabel!
     
-    @IBOutlet weak var navBarTitle: UINavigationItem!
     var condition: String?
     var temperature: Int?
 

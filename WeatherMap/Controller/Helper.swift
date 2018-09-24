@@ -9,6 +9,7 @@
 import Foundation
 import Alamofire
 import SwiftyJSON
+import MapKit
 
 class Helper {
     
@@ -76,6 +77,31 @@ class Helper {
         default :
             return UIImage(named: "Cloud")!
         }
+    }
+    
+    static func parseAddress(selectedItem: MKPlacemark) -> String {
+        
+        let firstSpace = (selectedItem.subThoroughfare != nil && selectedItem.thoroughfare != nil) ? " " : ""
+        
+        let comma = (selectedItem.subThoroughfare != nil || selectedItem.thoroughfare != nil) && (selectedItem.subAdministrativeArea != nil || selectedItem.administrativeArea != nil) ? ", " : ""
+        
+        let secondComma = (selectedItem.subAdministrativeArea != nil && selectedItem.administrativeArea != nil) ? ", " : ""
+        
+        let addressLine = String(
+            format:"%@%@%@%@%@%@%@",
+            // street number
+            selectedItem.subThoroughfare ?? "",
+            firstSpace,
+            // street name
+            selectedItem.thoroughfare ?? "",
+            comma,
+            // city
+            selectedItem.locality ?? "",
+            secondComma,
+            // state
+            selectedItem.administrativeArea ?? ""
+        )
+        return addressLine
     }
     
     static func update(destination: WeatherViewController, with json: JSON) {

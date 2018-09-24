@@ -11,17 +11,41 @@ import MapKit
 import CoreLocation
 import SwiftyJSON
 
+protocol HandleMapSearch {
+    func recenterMapView(placemark:MKPlacemark)
+}
+
 class MapViewController: UIViewController {
     
     @IBOutlet weak var mapView: MKMapView!
     
     let locationManager = CLLocationManager()
     
+    var resultSearchController:UISearchController?
+    
     var latitude: Double?
     var longitude: Double?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let searchTable = storyboard!.instantiateViewController(withIdentifier: "SearchTableViewController") as! SearchTableViewController
+        searchTable.mapView = mapView
+        searchTable.handleMapSearchDelegate = self
+        
+        resultSearchController = UISearchController(searchResultsController: searchTable)
+        resultSearchController?.searchResultsUpdater = searchTable
+        resultSearchController?.hidesNavigationBarDuringPresentation = false
+        resultSearchController?.dimsBackgroundDuringPresentation = true
+        definesPresentationContext = true
+        
+        let searchBar = resultSearchController!.searchBar
+        searchBar.sizeToFit()
+        searchBar.placeholder = "Search for places"
+        searchBar.searchBarStyle = .minimal
+        navigationItem.titleView = resultSearchController?.searchBar
+        let textFieldInsideSearchBar = searchBar.value(forKey: "searchField") as? UITextField
+        textFieldInsideSearchBar?.textColor = UIColor.orange
     }
     
     @IBAction func forecastButtonTapped(_ sender: Any) {
@@ -41,7 +65,7 @@ class MapViewController: UIViewController {
                 
                 Helper.update(destination: destinationVC, with: Helper.weatherJSON!)
                 
-                destinationVC.navBarTitle.title = "Lat: ~\(self.latitude!.rounded()), Lon: ~\(self.longitude!.rounded())"
+                destinationVC.navigationItem.title = "Lat: ~\(Int(self.latitude!)), Lon: ~\(Int(self.longitude!))"
             }
         }
     }
@@ -64,8 +88,18 @@ extension MapViewController: CLLocationManagerDelegate {
             locationManager.stopUpdatingLocation()
             locationManager.delegate = nil
             
-            mapView.centerCoordinate = CLLocationCoordinate2DMake(location.coordinate.latitude, location.coordinate.longitude)
+            let span = MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
+            let region = MKCoordinateRegion(center: CLLocationCoordinate2DMake(location.coordinate.latitude, location.coordinate.longitude), span: span)
+            mapView.setRegion(region, animated: true)
         }
+    }
+}
+
+extension MapViewController: HandleMapSearch {
+    func recenterMapView(placemark:MKPlacemark){
+        let span = MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
+        let region = MKCoordinateRegion(center: placemark.coordinate, span: span)
+        mapView.setRegion(region, animated: true)
     }
 }
 

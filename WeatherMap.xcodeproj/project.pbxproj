@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5E370C972159759A00D2F585 /* SearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E370C962159759A00D2F585 /* SearchTableViewController.swift */; };
 		5EE6A6B32159176500F882D6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE6A6B22159176500F882D6 /* AppDelegate.swift */; };
 		5EE6A6B52159176500F882D6 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE6A6B42159176500F882D6 /* MapViewController.swift */; };
 		5EE6A6BA2159176600F882D6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5EE6A6B92159176600F882D6 /* Assets.xcassets */; };
@@ -19,6 +20,7 @@
 
 /* Begin PBXFileReference section */
 		02461516F0868166821320F3 /* Pods-WeatherMap.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeatherMap.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WeatherMap/Pods-WeatherMap.debug.xcconfig"; sourceTree = "<group>"; };
+		5E370C962159759A00D2F585 /* SearchTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewController.swift; sourceTree = "<group>"; };
 		5EE6A6AF2159176500F882D6 /* WeatherMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeatherMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5EE6A6B22159176500F882D6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5EE6A6B42159176500F882D6 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
@@ -94,6 +96,7 @@
 		5EE6A6CC21591F7200F882D6 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				5E370C962159759A00D2F585 /* SearchTableViewController.swift */,
 				5EE6A6B42159176500F882D6 /* MapViewController.swift */,
 				5EE6A6C821591DA400F882D6 /* WeatherViewController.swift */,
 				5EE6A6CD2159498A00F882D6 /* Helper.swift */,
@@ -195,13 +198,11 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-WeatherMap/Pods-WeatherMap-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
-				"${BUILT_PRODUCTS_DIR}/JGProgressHUD/JGProgressHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JGProgressHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -236,6 +237,7 @@
 			files = (
 				5EE6A6B52159176500F882D6 /* MapViewController.swift in Sources */,
 				5EE6A6C921591DA400F882D6 /* WeatherViewController.swift in Sources */,
+				5E370C972159759A00D2F585 /* SearchTableViewController.swift in Sources */,
 				5EE6A6B32159176500F882D6 /* AppDelegate.swift in Sources */,
 				5EE6A6CE2159498A00F882D6 /* Helper.swift in Sources */,
 			);
