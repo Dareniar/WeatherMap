@@ -10,26 +10,50 @@ import Foundation
 import Alamofire
 import SwiftyJSON
 import MapKit
+import JGProgressHUD
 
 class Helper {
     
     static var weatherJSON: JSON?
+    
+    static var latitude: Double?
+    
+    static var longitude: Double?
 
-    static func fetchWeatherData(latitude: Double, longitude: Double, completion: ( () -> ())?) {
+    static func fetchWeatherData(destination: WeatherViewController) {
         
-        let url = "https://api.darksky.net/forecast/7b98a80047308516204ad5d82bb210b7/\(latitude),\(longitude)"
+        let url = "https://api.darksky.net/forecast/7b98a80047308516204ad5d82bb210b7/\(Helper.latitude!),\(Helper.longitude!)"
             
         Alamofire.request(url, method: .get, parameters: ["units":"si"]).responseJSON {
             
             response in
             if response.result.isSuccess {
                 
+                let hud = JGProgressHUD(style: .light)
+                hud.contentInsets = UIEdgeInsets(top: 60, left: 60, bottom: 60, right: 60)
+                hud.textLabel.text = "Loading"
+                hud.show(in: destination.view)
+                
                 weatherJSON = JSON(response.result.value!)
-                //print(weatherJSON)
-                completion?()
+                
+                guard let weatherJSON = weatherJSON else { return }
+                
+                Helper.update(destination: destination, with: weatherJSON)
+                
+                hud.dismiss(animated: true)
+                
+                return
                 
             } else {
-                print("Error \(String(describing: response.result.error)).")
+                
+                let errorHUD = JGProgressHUD(style: .light)
+                errorHUD.contentInsets = UIEdgeInsets(top: 60, left: 60, bottom: 60, right: 60)
+                errorHUD.indicatorView = JGProgressHUDErrorIndicatorView()
+                errorHUD.textLabel.text = "Lost Connection"
+                errorHUD.show(in: destination.view)
+                errorHUD.dismiss(afterDelay: 3.0)
+                destination.navigationController?.popViewController(animated: true)
+                //print("Error \(String(describing: response.result.error)).")
             }
         }
     }
@@ -106,8 +130,28 @@ class Helper {
     
     static func update(destination: WeatherViewController, with json: JSON) {
         
-        destination.temperature = Int(json["currently"]["temperature"].doubleValue)
-        destination.condition = json["currently"]["icon"].stringValue
+        CLGeocoder().reverseGeocodeLocation(CLLocation(latitude: Helper.latitude!, longitude: Helper.longitude!)) {
+            (placemarks, geocoderError) in
+            
+            if geocoderError != nil {
+                print("Reverse geocoder failed with error" + geocoderError!.localizedDescription)
+            }
+            
+            if let placemarks = placemarks {
+                let pm = placemarks[0]
+                var title = parseAddress(selectedItem: MKPlacemark(placemark: pm))
+                if title != "" {
+                    if !title.starts(with: ", ") {
+                        destination.navigationItem.title = title
+                    } else {
+                        title.removeFirst(2)
+                        destination.navigationItem.title = title
+                    }
+                } else {
+                    destination.navigationItem.title = "Lat: ~\(Int(Helper.latitude!)), Lon: ~\(Int(Helper.longitude!))"
+                }
+            }
+        }
         
         destination.conditionImage.image = Helper.getImage(with: json["currently"]["icon"].stringValue)
         destination.temperatureLabel.text = "\(json["currently"]["temperature"].intValue) °C"

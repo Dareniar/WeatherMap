@@ -104,7 +104,7 @@
                                         </subviews>
                                     </stackView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Z18-Pe-mQf">
-                                        <rect key="frame" x="0.0" y="504" width="414" height="33.666666666666686"/>
+                                        <rect key="frame" x="0.0" y="504.00000000000006" width="414" height="33.666666666666686"/>
                                         <color key="backgroundColor" red="0.098039215690000001" green="0.1137254902" blue="0.12549019610000001" alpha="1" colorSpace="calibratedRGB"/>
                                     </view>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="X0T-X7-gOu">
@@ -449,7 +449,6 @@
                         <outlet property="mapView" destination="le8-MG-gD0" id="eDN-fE-cPf"/>
                         <outlet property="searchDisplayController" destination="Fz1-ce-5HF" id="pdq-vX-7gJ"/>
                         <segue destination="jJQ-JH-b3a" kind="show" identifier="forecast" id="cXP-4h-MI2"/>
-                        <segue destination="jJQ-JH-b3a" kind="show" identifier="search" id="ju6-Om-YNZ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fY4-6X-5y4" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -503,8 +502,5 @@
         <image name="Umbrella" width="32" height="36"/>
         <image name="Wind" width="38" height="35"/>
     </resources>
-    <inferredMetricsTieBreakers>
-        <segue reference="ju6-Om-YNZ"/>
-    </inferredMetricsTieBreakers>
     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
 </document>

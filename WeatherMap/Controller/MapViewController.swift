@@ -9,8 +9,6 @@
 import UIKit
 import MapKit
 import CoreLocation
-import SwiftyJSON
-import JGProgressHUD
 
 protocol HandleMapSearch {
     func recenterMapView(placemark:MKPlacemark)
@@ -23,9 +21,6 @@ class MapViewController: UIViewController {
     let locationManager = CLLocationManager()
     
     var resultSearchController:UISearchController?
-    
-    var latitude: Double?
-    var longitude: Double?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,32 +47,15 @@ class MapViewController: UIViewController {
     
     @IBAction func forecastButtonTapped(_ sender: Any) {
         
-        longitude = Double(mapView.centerCoordinate.longitude)
-        latitude = Double(mapView.centerCoordinate.latitude)
+        Helper.longitude = Double(mapView.centerCoordinate.longitude)
+        Helper.latitude = Double(mapView.centerCoordinate.latitude)
         performSegue(withIdentifier: "forecast", sender: self)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         let destinationVC = segue.destination as! WeatherViewController
-        
-        let hud = JGProgressHUD(style: .light)
-        hud.contentInsets = UIEdgeInsets(top: 60, left: 60, bottom: 60, right: 60)
-        hud.textLabel.text = "Loading"
-        hud.show(in: destinationVC.view)
-        
-        
-        if segue.identifier == "forecast" {
-            
-            Helper.fetchWeatherData(latitude: latitude!, longitude: longitude!) {
-                
-                Helper.update(destination: destinationVC, with: Helper.weatherJSON!)
-                
-                destinationVC.navigationItem.title = "Lat: ~\(Int(self.latitude!)), Lon: ~\(Int(self.longitude!))"
-                
-                hud.dismiss(animated: true)
-            }
-        }
+        Helper.fetchWeatherData(destination: destinationVC)
     }
 }
 

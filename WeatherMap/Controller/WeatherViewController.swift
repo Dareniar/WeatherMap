@@ -35,17 +35,8 @@ class WeatherViewController: UIViewController {
     @IBOutlet weak var conditionImage5: UIImageView!
     @IBOutlet weak var temperatureLabel5: UILabel!
     @IBOutlet weak var dayLabel5: UILabel!
-    
-    var condition: String?
-    var temperature: Int?
 
     override func viewDidLoad() {
         super.viewDidLoad()
     }
-    
-
-    @IBAction func backButtonTapped(_ sender: Any) {
-        dismiss(animated: true, completion: nil)
-    }
-
 }
