@@ -27,7 +27,7 @@ class SearchTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell")!
         let selectedItem = matchingItems[indexPath.row].placemark
         cell.textLabel?.text = selectedItem.name
-        cell.detailTextLabel?.text = Helper.parseAddress(selectedItem: selectedItem)
+        cell.detailTextLabel?.text = Helper.shared.parseAddress(selectedItem: selectedItem)
         
         let orangeView = UIView()
         orangeView.backgroundColor = UIColor.orange

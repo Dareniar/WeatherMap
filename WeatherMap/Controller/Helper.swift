@@ -14,15 +14,17 @@ import JGProgressHUD
 
 class Helper {
     
-    static var weatherJSON: JSON?
+    static let shared = Helper()
     
-    static var latitude: Double?
+    var weatherJSON: JSON?
     
-    static var longitude: Double?
+    var latitude: Double?
+    
+    var longitude: Double?
 
-    static func fetchWeatherData(destination: WeatherViewController) {
+    func fetchWeatherData(destination: WeatherViewController) {
         
-        let url = "https://api.darksky.net/forecast/7b98a80047308516204ad5d82bb210b7/\(Helper.latitude!),\(Helper.longitude!)"
+        let url = "https://api.darksky.net/forecast/7b98a80047308516204ad5d82bb210b7/\(self.latitude!),\(self.longitude!)"
         
         let hud = JGProgressHUD(style: .light)
         hud.contentInsets = UIEdgeInsets(top: 60, left: 60, bottom: 60, right: 60)
@@ -34,13 +36,13 @@ class Helper {
             response in
             if response.result.isSuccess {
                 
-                weatherJSON = JSON(response.result.value!)
+                self.weatherJSON = JSON(response.result.value!)
                 
-                guard let weatherJSON = weatherJSON else { return }
+                guard let weatherJSON = self.weatherJSON else { return }
                 
                 hud.dismiss(animated: true)
                 
-                Helper.update(destination: destination, with: weatherJSON)
+                self.update(destination: destination, with: weatherJSON)
                 
             } else {
                 
@@ -59,7 +61,7 @@ class Helper {
         }
     }
     
-    static func getDayOfWeek(with date: Date) -> String {
+    func getDayOfWeek(with date: Date) -> String {
         
         let myCalendar = Calendar(identifier: .gregorian)
         let weekDay = myCalendar.component(.weekday, from: date)
@@ -82,7 +84,7 @@ class Helper {
         }
     }
     
-    static func getImage(with icon: String) -> UIImage {
+    func getImage(with icon: String) -> UIImage {
         
         switch (icon) {
             
@@ -104,7 +106,7 @@ class Helper {
         }
     }
     
-    static func parseAddress(selectedItem: MKPlacemark) -> String {
+    func parseAddress(selectedItem: MKPlacemark) -> String {
         
         let firstSpace = (selectedItem.subThoroughfare != nil && selectedItem.thoroughfare != nil) ? " " : ""
         
@@ -129,14 +131,14 @@ class Helper {
         return addressLine
     }
     
-    static func update(destination: WeatherViewController, with json: JSON) {
+    func update(destination: WeatherViewController, with json: JSON) {
         
-        CLGeocoder().reverseGeocodeLocation(CLLocation(latitude: Helper.latitude!, longitude: Helper.longitude!)) {
+        CLGeocoder().reverseGeocodeLocation(CLLocation(latitude: self.latitude!, longitude: self.longitude!)) {
             (placemarks, geocoderError) in
             
             if let placemarks = placemarks {
                 let pm = placemarks[0]
-                var title = parseAddress(selectedItem: MKPlacemark(placemark: pm))
+                var title = self.parseAddress(selectedItem: MKPlacemark(placemark: pm))
                 if title != "" {
                     if !title.starts(with: ", ") {
                         destination.navigationItem.title = title
@@ -145,36 +147,36 @@ class Helper {
                         destination.navigationItem.title = title
                     }
                 } else {
-                    destination.navigationItem.title = "Lat: ~\(Int(Helper.latitude!)), Lon: ~\(Int(Helper.longitude!))"
+                    destination.navigationItem.title = "Lat: ~\(Int(self.latitude!)), Lon: ~\(Int(self.longitude!))"
                 }
             }
         }
         
-        destination.conditionImage.image = Helper.getImage(with: json["currently"]["icon"].stringValue)
+        destination.conditionImage.image = self.getImage(with: json["currently"]["icon"].stringValue)
         destination.temperatureLabel.text = "\(json["currently"]["temperature"].intValue) °C"
         destination.windSpeedLabel.text = "\(json["currently"]["windSpeed"].intValue)  m/s"
         destination.humidityLabel.text = "\(Int(json["currently"]["humidity"].doubleValue * 100))%"
         destination.precipLabel.text = "\(Int((json["currently"]["precipProbability"].doubleValue) * 100))%"
         
-        destination.conditionImage1.image = Helper.getImage(with: json["daily"]["data"][0]["icon"].stringValue)
+        destination.conditionImage1.image = self.getImage(with: json["daily"]["data"][0]["icon"].stringValue)
         destination.temperatureLabel1.text = "\(Int((json["daily"]["data"][0]["temperatureHigh"].doubleValue + json["daily"]["data"][0]["temperatureLow"].doubleValue))/2) °C"
-        destination.dayLabel1.text = Helper.getDayOfWeek(with: Date(timeIntervalSince1970: TimeInterval(json["daily"]["data"][0]["time"].intValue)))
+        destination.dayLabel1.text = self.getDayOfWeek(with: Date(timeIntervalSince1970: TimeInterval(json["daily"]["data"][0]["time"].intValue)))
         
-        destination.conditionImage2.image = Helper.getImage(with: json["daily"]["data"][1]["icon"].stringValue)
+        destination.conditionImage2.image = self.getImage(with: json["daily"]["data"][1]["icon"].stringValue)
         destination.temperatureLabel2.text = "\(Int((json["daily"]["data"][1]["temperatureHigh"].doubleValue + json["daily"]["data"][1]["temperatureLow"].doubleValue))/2) °C"
-        destination.dayLabel2.text = Helper.getDayOfWeek(with: Date(timeIntervalSince1970: TimeInterval(json["daily"]["data"][1]["time"].intValue)))
+        destination.dayLabel2.text = self.getDayOfWeek(with: Date(timeIntervalSince1970: TimeInterval(json["daily"]["data"][1]["time"].intValue)))
         
-        destination.conditionImage3.image = Helper.getImage(with: json["daily"]["data"][2]["icon"].stringValue)
+        destination.conditionImage3.image = self.getImage(with: json["daily"]["data"][2]["icon"].stringValue)
         destination.temperatureLabel3.text = "\(Int((json["daily"]["data"][2]["temperatureHigh"].doubleValue + json["daily"]["data"][2]["temperatureLow"].doubleValue))/2) °C"
-        destination.dayLabel3.text = Helper.getDayOfWeek(with: Date(timeIntervalSince1970: TimeInterval(json["daily"]["data"][2]["time"].intValue)))
+        destination.dayLabel3.text = self.getDayOfWeek(with: Date(timeIntervalSince1970: TimeInterval(json["daily"]["data"][2]["time"].intValue)))
         
-        destination.conditionImage4.image = Helper.getImage(with: json["daily"]["data"][3]["icon"].stringValue)
+        destination.conditionImage4.image = self.getImage(with: json["daily"]["data"][3]["icon"].stringValue)
         destination.temperatureLabel4.text = "\(Int((json["daily"]["data"][3]["temperatureHigh"].doubleValue + json["daily"]["data"][3]["temperatureLow"].doubleValue))/2) °C"
-        destination.dayLabel4.text = Helper.getDayOfWeek(with: Date(timeIntervalSince1970: TimeInterval(json["daily"]["data"][3]["time"].intValue)))
+        destination.dayLabel4.text = self.getDayOfWeek(with: Date(timeIntervalSince1970: TimeInterval(json["daily"]["data"][3]["time"].intValue)))
         
-        destination.conditionImage5.image = Helper.getImage(with: json["daily"]["data"][4]["icon"].stringValue)
+        destination.conditionImage5.image = self.getImage(with: json["daily"]["data"][4]["icon"].stringValue)
         destination.temperatureLabel5.text = "\(Int((json["daily"]["data"][4]["temperatureHigh"].doubleValue + json["daily"]["data"][4]["temperatureLow"].doubleValue))/2) °C"
-        destination.dayLabel5.text = Helper.getDayOfWeek(with: Date(timeIntervalSince1970: TimeInterval(json["daily"]["data"][4]["time"].intValue)))
+        destination.dayLabel5.text = self.getDayOfWeek(with: Date(timeIntervalSince1970: TimeInterval(json["daily"]["data"][4]["time"].intValue)))
     }
 }
 

@@ -47,15 +47,15 @@ class MapViewController: UIViewController {
     
     @IBAction func forecastButtonTapped(_ sender: Any) {
         
-        Helper.longitude = Double(mapView.centerCoordinate.longitude)
-        Helper.latitude = Double(mapView.centerCoordinate.latitude)
+        Helper.shared.longitude = Double(mapView.centerCoordinate.longitude)
+        Helper.shared.latitude = Double(mapView.centerCoordinate.latitude)
         performSegue(withIdentifier: "forecast", sender: self)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         let destinationVC = segue.destination as! WeatherViewController
-        Helper.fetchWeatherData(destination: destinationVC)
+        Helper.shared.fetchWeatherData(destination: destinationVC)
     }
 }
 
