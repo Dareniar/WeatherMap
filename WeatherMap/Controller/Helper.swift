@@ -23,28 +23,30 @@ class Helper {
     static func fetchWeatherData(destination: WeatherViewController) {
         
         let url = "https://api.darksky.net/forecast/7b98a80047308516204ad5d82bb210b7/\(Helper.latitude!),\(Helper.longitude!)"
+        
+        let hud = JGProgressHUD(style: .light)
+        hud.contentInsets = UIEdgeInsets(top: 60, left: 60, bottom: 60, right: 60)
+        hud.textLabel.text = "Loading"
+        hud.show(in: destination.view)
             
         Alamofire.request(url, method: .get, parameters: ["units":"si"]).responseJSON {
             
             response in
             if response.result.isSuccess {
                 
-                let hud = JGProgressHUD(style: .light)
-                hud.contentInsets = UIEdgeInsets(top: 60, left: 60, bottom: 60, right: 60)
-                hud.textLabel.text = "Loading"
-                hud.show(in: destination.view)
-                
                 weatherJSON = JSON(response.result.value!)
                 
                 guard let weatherJSON = weatherJSON else { return }
                 
-                Helper.update(destination: destination, with: weatherJSON)
-                
                 hud.dismiss(animated: true)
                 
-                return
+                Helper.update(destination: destination, with: weatherJSON)
                 
             } else {
+                
+                print("Error \(String(describing: response.result.error)).")
+                
+                hud.dismiss(animated: true)
                 
                 let errorHUD = JGProgressHUD(style: .light)
                 errorHUD.contentInsets = UIEdgeInsets(top: 60, left: 60, bottom: 60, right: 60)
@@ -53,7 +55,6 @@ class Helper {
                 errorHUD.show(in: destination.view)
                 errorHUD.dismiss(afterDelay: 3.0)
                 destination.navigationController?.popViewController(animated: true)
-                //print("Error \(String(describing: response.result.error)).")
             }
         }
     }
@@ -132,10 +133,6 @@ class Helper {
         
         CLGeocoder().reverseGeocodeLocation(CLLocation(latitude: Helper.latitude!, longitude: Helper.longitude!)) {
             (placemarks, geocoderError) in
-            
-            if geocoderError != nil {
-                print("Reverse geocoder failed with error" + geocoderError!.localizedDescription)
-            }
             
             if let placemarks = placemarks {
                 let pm = placemarks[0]

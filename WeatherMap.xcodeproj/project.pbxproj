@@ -68,20 +68,12 @@
 			isa = PBXGroup;
 			children = (
 				5EE6A6B22159176500F882D6 /* AppDelegate.swift */,
-				5EE6A6CA21591F6600F882D6 /* Model */,
 				5EE6A6CB21591F6D00F882D6 /* View */,
 				5EE6A6CC21591F7200F882D6 /* Controller */,
 				5EE6A6B92159176600F882D6 /* Assets.xcassets */,
 				5EE6A6BE2159176600F882D6 /* Info.plist */,
 			);
 			path = WeatherMap;
-			sourceTree = "<group>";
-		};
-		5EE6A6CA21591F6600F882D6 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 		5EE6A6CB21591F6D00F882D6 /* View */ = {
